@@ -1,1 +1,1 @@
-from data_processing import prepare_europe_data, prepare_empty_frame
+from .data_processing import prepare_europe_data, prepare_empty_frame, plot_covid_data

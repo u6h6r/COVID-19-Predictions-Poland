@@ -2,6 +2,8 @@ import numpy as np
 import pandas as pd
 from copy import copy
 import datetime
+import plotly.express as px
+import plotly.graph_objs as go
 
 EUROPE = ['Albania', 'Andorra', 'Armenia', 'Austria', 'Azerbaijan', 'Belarus',
           'Belgium', 'Bosnia and Herzegovina', 'Bulgaria', 'Croatia', 'Cyprus',
@@ -45,3 +47,16 @@ def prepare_empty_frame(start_date, end_date, country=None):
     if country:
         df = df.loc[df['Country/Region'] == country]
     return df
+
+def plot_covid_data(data, country):
+    country_plot = data.loc[data['Country/Region'] == country]
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(
+                x=country_plot.columns[1:],
+                y=country_plot.values[0][1:],
+                mode='lines',
+                name='Offical'))
+    fig.update_layout(title='COVID-19 cases for {}'.format(country),
+                               xaxis_title='Day',
+                               yaxis_title='Cases')
+    fig.show()
