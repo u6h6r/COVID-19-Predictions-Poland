@@ -60,3 +60,17 @@ def plot_covid_data(data, country):
                                xaxis_title='Day',
                                yaxis_title='Cases')
     fig.show()
+
+def get_daily_cases(prepared_data):
+    df = prepared_data
+    country_name = df.iloc[0][0]
+    #transform data
+    df = df.T
+    df.columns = df.iloc[0]
+    df = df.drop(df.index[0])
+    df = df.rename({country_name: country_name+'ConfirmedCases'}, axis=1)
+    df['CasesShifted'] = df['PolandConfirmedCases'].shift(1, axis=0)
+    df['DailyGrowthCases'] = df['PolandConfirmedCases']-df['CasesShifted']
+    daily_growth_series = df['DailyGrowthCases']
+    daily_growth_series = daily_growth_series.dropna()
+    return df, daily_growth_series
