@@ -20,3 +20,7 @@ def crosscorr(datax, datay, lag=0):
     crosscorr : float
     """
     return datax.corr(datay.shift(lag))
+
+def MAPE(y_true, y_pred): 
+  y_true, y_pred = np.array(y_true), np.array(y_pred)
+  return np.mean(np.abs((y_true - y_pred) / np.maximum(np.ones(len(y_true)), np.abs(y_true))))*100
